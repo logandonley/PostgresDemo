@@ -1,0 +1,11 @@
+---
+- hosts: postgres
+
+  tasks:
+      - name: Install Postgres.
+        yum: name={{ item }} state=present
+        with_items:
+            - postgresql
+            - postgresql-server
+            - postgresql-contrib
+        become: true
