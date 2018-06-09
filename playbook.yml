@@ -1,11 +1,49 @@
 ---
-- hosts: postgres
+- hosts: multi 
 
   tasks:
-      - name: Install Postgres.
+      - name: Install Yum Repos.
         yum: name={{ item }} state=present
         with_items:
             - postgresql
             - postgresql-server
             - postgresql-contrib
+            - postgresql-devel
+            - python-devel
+            - git
+            - gcc
         become: true
+
+      - name: Install Python.
+        yum: name=python state=present
+        become: true
+
+      - name: Install Pip Repo.
+        yum: 
+          name: http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/python2-pip-8.1.2-6.el7.noarch.rpm
+          state: present
+        become: true
+
+      - name: Install pip.
+        yum: name=python2-pip state=present
+        become: true
+
+      - name: Install psycopg.
+        shell: git clone https://github.com/psycopg/psycopg2.git 
+        shell: python /home/vagrant/psycopg2/setup.py build 
+        shell: rm -rf /home/vagrant/psycopg2
+
+      - shell: ls /var/lib/pgsql/data 
+        register: data_files
+        become: true
+
+      - name: Initialize Postgres
+        shell: postgresql-setup initdb
+        when: data_files.stdout == ""
+        become: true
+
+      - name: Enable Postgres
+        systemd: name=postgresql state=started
+        become: true
+
+

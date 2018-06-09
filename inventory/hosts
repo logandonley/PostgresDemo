@@ -1,7 +1,15 @@
-[postgres]
+[master]
 192.168.33.10
 
-[postgres:vars]
+[replicas]
+192.168.33.11
+192.168.33.12
+
+[multi:children]
+master
+replicas
+
+[multi:vars]
 ansible_ssh_user=vagrant
 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 
