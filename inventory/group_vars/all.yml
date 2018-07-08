@@ -1,0 +1,5 @@
+---
+datadir: /var/lib/pgsql/10/data
+pgconfile: /var/lib/pgsql/10/data/postgresql.conf
+pghbafile: /var/lib/pgsql/10/data/pg_hba.conf
+

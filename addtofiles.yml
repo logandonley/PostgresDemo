@@ -1,0 +1,32 @@
+---
+- hosts: all
+
+# Just for Demo / Devel purposes. Hosts are left wide open
+# Next revision to change existing paramenters as opposed to appending to end of file
+# Be tighter with permissions
+# Setup postgresql.conf parameters
+# Setup pg_conf.hba parameters
+#
+  become: yes
+  tasks:
+  - debug:
+     msg: '{{ pgconfile }}'
+  - name: Demarcate changed files
+    lineinfile:
+      path: '{{ pgconfile }}'
+      line: --------------------
+      insertbefore: EOF
+      state: present
+  - name: Set up listening from remote hosts
+    lineinfile: 
+       path: '{{ pgconfile }}'
+       line: listen_addresses='*\'
+       insertbefore: EOF
+       state: present
+  - name: Open up HBA.conf
+    lineinfile: 
+       path: '{{ pghbafile }}'
+       line: 'host    all             all             0.0.0.0/0               trust'
+       insertbefore: EOF
+
+
