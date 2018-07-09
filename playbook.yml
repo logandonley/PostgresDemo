@@ -40,4 +40,21 @@
         systemd: name=postgresql-10 state=started
         become: true
 
+      - name: Edit postgresql.conf 
+        template:
+          src: postgresql.conf.j2
+          dest: "{{ pgconfile }}"
+          owner: root
+          group: root
+          mode: 0600
+        become: yes
+
+      - name: Edit postgresql.conf 
+        template:
+          src: pg_hba.conf.j2
+          dest: "{{ pghbafile }}"
+          owner: root
+          group: root
+          mode: 0600
+        become: yes
 
