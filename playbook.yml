@@ -27,7 +27,7 @@
         shell: git clone https://github.com/psycopg/psycopg2.git && python /home/vagrant/psycopg2/setup.py build 
         shell: rm -rf /home/vagrant/psycopg2
 
-      - shell: ls /var/lib/pgsql/10/data 
+      - shell: ls "{{ datadir }}"
         register: data_files
         become: true
 

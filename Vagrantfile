@@ -9,18 +9,18 @@ Vagrant.configure("2") do |config|
      vb.memory = "256"
    end
 
-  config.vm.define "master" do |master|
-    master.vm.hostname = "master.dev"
-    master.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.define "dbsvr1" do |master|
+    master.vm.hostname = "dbsvr1.dev"
+    master.vm.network "private_network", type: "dhcp"
   end
 
-  config.vm.define "replica1" do |replica|
-    replica.vm.hostname = "replica1.dev"
-    replica.vm.network "private_network", ip: "192.168.33.11"
+  config.vm.define "dbsvr2" do |replica|
+    replica.vm.hostname = "dbsvr2.dev"
+    replica.vm.network "private_network", type: "dhcp"
   end
 
-  config.vm.define "replica2" do |replica|
-    replica.vm.hostname = "replica2.dev"
-    replica.vm.network "private_network", ip: "192.168.33.12"
+  config.vm.define "backupsvr" do |replica|
+    replica.vm.hostname = "backupsvr.dev"
+    replica.vm.network "private_network", type: "dhcp"
   end
 end
